@@ -6,7 +6,7 @@ import { __prod__ } from './constants';
 // import express from 'express';
 // import User from './models/User/User';
 import ormconfig from './ormconfig';
-import { UsersResolver } from './resolvers/users';
+import { UserResolver } from './resolvers/users';
 // import { resolvers } from './schema/resolvers';
 // import { typeDefs } from './schema/type-defs';
 
@@ -43,9 +43,10 @@ const main = async () => {
   // which will interpret the type-graphql decorators we used in our resolver class(es) provided
   const server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UsersResolver],
+      resolvers: [UserResolver],
       validate: false,
     }),
+    context: () => orm,
   });
 
   server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
